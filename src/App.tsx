@@ -4,6 +4,7 @@ import './App.css'
 // components
 import InputField from './components/InputField.tsx'
 import { Todo } from './components/model.ts'
+import TodoList from './components/TodoList.tsx'
 
 const App: React.FC = () => {
 
@@ -25,7 +26,11 @@ const App: React.FC = () => {
       <span className="heading">
         Taskify
       </span>
-      <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd}/>
+      <InputField todo={todo} setTodo={setTodo} handleAdd={(e)=>handleAdd(e)}/>
+      {/* <TodoList /> */}
+      {todos.map((t) =>
+        <li key={t.id}>{t.todo}</li>
+      )}
    </div>
   )
 }
