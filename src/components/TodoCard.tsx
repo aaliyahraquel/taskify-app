@@ -13,7 +13,7 @@ type Props = {
 
 const TodoCard = ({ todo, todos, setTodos }: Props) => {
   return (
-    <form className="todos_single">
+    <form className="todos__single">
         <span className="todos__single--text">{todo.todo}</span>
         <div>
             <span className="icons">
