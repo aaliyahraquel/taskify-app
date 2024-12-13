@@ -1,6 +1,6 @@
 // styles
 import { useRef } from 'react';
-import './InputField.css'
+import './styles.css'
 
 interface Props {
   todo: string;
@@ -8,7 +8,7 @@ interface Props {
   handleAdd: (e: React.FormEvent<EventTarget>) => void;
 }
 
-const InputField = ( { todo, setTodo, handleAdd }: Props ) => {
+const InputField = ({ todo, setTodo, handleAdd }: Props ) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
