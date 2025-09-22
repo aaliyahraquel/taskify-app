@@ -1,40 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete, MdDone } from "react-icons/md";
-import { Todo } from './model';
+import { Todo } from './toDoReducer';
 
 type Props = {
     todo: Todo,
     todos: Todo[],
-    setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+    dispatch: React.Dispatch<any>
 }
 
-
-
-const TodoCard = ({ todo, todos, setTodos }: Props) => {
+const TodoCard = ({ todo, dispatch }: Props) => {
 
     const [edit, setEdit] = useState<boolean>(false)    
     const [editTodo, setEditTodo] = useState<string>(todo.todo)
-
-    const handleDone = (id: number) => {
-        setTodos(todos.map( (todo) => todo.id === id? { ...todo, isDone: !todo.isDone } : todo))
-    }
-
-    const handleDelete = (id: number) => {
-        setTodos(todos.filter((todo) => todo.id !== id))
-    }
-
-    const handleEdit = (e:React.FormEvent, id:number) => {
-        e.preventDefault()
-        setTodos(todos.map((todo) => todo.id === id? {...todo, todo: editTodo}: todo))
-        setEdit(false)
-    }
-
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         inputRef.current?.focus()
     }, [edit])
+
+
+    const handleDone = (id: number) => {
+        dispatch({ type: "done", payload: id })
+    }
+
+    const handleDelete = (id: number) => {
+        dispatch({ type: "remove", payload: id })
+    }
+
+    const handleEdit = (e:React.FormEvent, id:number) => {
+        e.preventDefault()
+        dispatch({ type: "edit", payload: {id, todo: editTodo} })
+        setEdit(false)
+
+        const inputRef = useRef<HTMLInputElement>(null);
+        useEffect(() => {
+            inputRef.current && inputRef.current.focus()
+        }, [edit]);
+    }
 
   return (
     <form className="todos__single" onSubmit={(e) => handleEdit(e, todo.id)}>
@@ -52,13 +55,15 @@ const TodoCard = ({ todo, todos, setTodos }: Props) => {
         )}
 
         <div>
-            <span className="icons" onClick={()=> !edit && !todo.isDone? setEdit(!edit): edit}
+            <span className="icons" onClick={() => !edit && !todo.isDone? setEdit(!edit): edit}
             >
                 <FaEdit />
             </span>
+
             <span className="icons">
                 <MdDelete onClick={()=> handleDelete(todo.id)}/>
             </span>
+
             <span className="icons">
                 <MdDone onClick={()=> handleDone(todo.id)}/>
             </span>

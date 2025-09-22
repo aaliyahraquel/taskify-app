@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import './App.css'
 
 // components
 import InputField from './components/InputField.tsx'
-import { Todo } from './components/model.ts'
+import { Todo, TodoReducer } from './components/toDoReducer.ts'
 import TodoList from './components/TodoList.tsx'
 
 const App: React.FC = () => {
 
   const [todo, setTodo] = useState<string>('')
-  const [todos, setTodos] = useState<Todo[]>([])
+  const [todos, dispatch] = useReducer(TodoReducer, [])
 
   const handleAdd = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault()
     if (todo) {
-      setTodos([...todos, {id: Date.now(), todo: todo, isDone: false} ])
+      dispatch({ type: 'add', payload: todo })
       setTodo('')
     }
   }
@@ -25,7 +25,7 @@ const App: React.FC = () => {
         Taskify
       </span>
       <InputField todo={todo} setTodo={setTodo} handleAdd={(e)=>handleAdd(e)}/>
-      <TodoList todos={todos} setTodos={setTodos}/>
+      <TodoList todos={todos} dispatch={dispatch}/>
    </div>
   )
 }
