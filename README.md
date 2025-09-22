@@ -57,7 +57,7 @@ src/
 
 ## 📸 Screenshots
 
-![Taskify Screenshot](screenshot.png)
+![Taskify Screenshot] (public/taskify.png)
 
 ## 🤝 Contributing
 
