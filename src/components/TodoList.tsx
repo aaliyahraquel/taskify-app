@@ -7,30 +7,35 @@ export interface TodoListProps {
   dispatch: React.Dispatch<any>
 }
 
-const TodoList: React.FC<TodoListProps> = ({todos, dispatch})=> {
-
+const TodoList: React.FC<TodoListProps> = ({ todos, dispatch }) => {
   return (
     <div className="todo-list-container">
-      <div className="todos"> 
+      <div className="todos">
         <span className="todos__heading">Your tasks</span>
-        {todos && todos.map((todo) => (
-          <TodoCard 
-          todo={todo} 
-          key={todo.id} 
-          todos={todos} 
-          dispatch={dispatch}/>
-        ))}
+        {todos
+          .filter((todo) => !todo.isDone)
+          .map((todo) => (
+            <TodoCard
+              todo={todo}
+              todos={todos}
+              key={todo.id}
+              dispatch={dispatch}
+            />
+          ))}
       </div>
 
-      <div className="todos remove">
+      <div className="todos completed">
         <span className="todos__heading">Completed tasks</span>
-        {todos && todos.map((todo) => (
-          <TodoCard 
-          todo={todo} 
-          key={todo.id} 
-          todos={todos} 
-          dispatch={dispatch}/>
-        ))}
+        {todos
+          .filter((todo) => todo.isDone)
+          .map((todo) => (
+            <TodoCard
+              todo={todo}
+              todos={todos}
+              key={todo.id}
+              dispatch={dispatch}
+            />
+          ))}
       </div>
     </div>
   )
