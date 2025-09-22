@@ -10,16 +10,28 @@ export interface TodoListProps {
 const TodoList: React.FC<TodoListProps> = ({todos, dispatch})=> {
 
   return (
-    <div className="todos">
-        {todos.map((todo) => (
-            <TodoCard
-                key={todo.id}
-                todo={todo}
-                todos={todos}
-                dispatch={dispatch}
-            />
+    <div className="todo-list-container">
+      <div className="todos"> 
+        <span className="todos__heading">Your tasks</span>
+        {todos && todos.map((todo) => (
+          <TodoCard 
+          todo={todo} 
+          key={todo.id} 
+          todos={todos} 
+          dispatch={dispatch}/>
         ))}
-        
+      </div>
+
+      <div className="todos remove">
+        <span className="todos__heading">Completed tasks</span>
+        {todos && todos.map((todo) => (
+          <TodoCard 
+          todo={todo} 
+          key={todo.id} 
+          todos={todos} 
+          dispatch={dispatch}/>
+        ))}
+      </div>
     </div>
   )
 }
