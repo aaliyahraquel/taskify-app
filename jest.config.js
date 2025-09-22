@@ -1,0 +1,15 @@
+// jest.config.js
+export default {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  // If using ESM, add:
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+};
